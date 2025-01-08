@@ -1,7 +1,7 @@
 name: Autograding Tests
 'on':
 - push
-- repository_dispatch
+- workflow_dispatch
 permissions:
   checks: write
   actions: read
@@ -53,9 +53,10 @@ jobs:
         max-score: 2
 
     - name: Autograding Reporter
-      uses: classroom-resources/autograding-grading-reporter@v1
+      uses: ./
       env:
         TEST-HTML_RESULTS: "${{steps.test-html.outputs.result}}"
         TEST-CSS_RESULTS: "${{steps.test-css.outputs.result}}"
+        TEST-EXCEEDS_RESULTS: "${{steps.test-exceeds.outputs.result}}"
       with:
-        runners: test-html,test-css
+        runners: test-html,test-css,test-exceeds
